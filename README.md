@@ -16,7 +16,7 @@ $ npm install --save opentok-annotation
 If using browserify or webpack:
 
 ```javascript
-const textChat = require('opentok-annotation');
+const annotation = require('opentok-annotation');
 ```
 
 Otherwise, include the accelerator pack in your html:
