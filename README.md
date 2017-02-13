@@ -1,6 +1,6 @@
 ![logo](tokbox-logo.png)
 
-# Accelerator Annotation for JavaScript<br/>Version 2.0.+-beta
+# Accelerator Annotation for JavaScript<br/>Version 2.0.+ beta
 
 ## Quick start
 
