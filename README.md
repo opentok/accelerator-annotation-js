@@ -1,9 +1,9 @@
 ![logo](tokbox-logo.png)
 
 [![Build Status](https://travis-ci.org/opentok/accelerator-annotation-js.svg?branch=master)](https://travis-ci.org/opentok/accelerator-annotation-js)
-[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](./README.md)
+[![GitHub release](https://img.shields.io/github/release/opentok/accelerator-annotation-js.svg)](./README.md)
 [![license MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./.github/LICENSE)
-[![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/opentok-annotation)
+[![npm](https://img.shields.io/npm/v/opentok-annotation.svg)](https://www.npmjs.com/package/opentok-annotation)
 
 ______
 
