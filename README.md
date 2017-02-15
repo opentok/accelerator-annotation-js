@@ -6,6 +6,8 @@
 [![npm](https://img.shields.io/npm/v/opentok-annotation.svg)](https://www.npmjs.com/package/opentok-annotation)
 ______
 
+______
+
 # Accelerator Annotation for JavaScript<br/>
 
 ## Quick start
