@@ -1,6 +1,13 @@
 ![logo](tokbox-logo.png)
 
-# Accelerator Annotation for JavaScript<br/>Version 2.0.+ beta
+[![Build Status](https://travis-ci.org/opentok/accelerator-annotation-js.svg?branch=master)](https://travis-ci.org/opentok/accelerator-annotation-js)
+[![GitHub release](https://img.shields.io/github/release/opentok/accelerator-annotation-js.svg)](./README.md)
+[![license MIT](https://img.shields.io/github/license/opentok/accelerator-annotation-js.svg)](./.github/LICENSE)
+[![npm](https://img.shields.io/npm/v/opentok-annotation.svg)](https://www.npmjs.com/package/opentok-annotation)
+
+______
+
+# Accelerator Annotation for JavaScript<br/>
 
 ## Quick start
 
@@ -25,7 +32,7 @@ Otherwise, include the accelerator pack in your html:
 <script src="../your/path/to/opentok-annotation.js"></script>
 ```
  . . . and it will be available in global scope as `AnnotationAccPack`
-
+ 
 -----------------
 
 Click [here](https://www.npmjs.com/search?q=opentok-acc-pack) for a list of all OpenTok accelerator packs.
