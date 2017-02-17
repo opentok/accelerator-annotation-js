@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="https://assets.tokbox.com/solutions/css/style.css">
+    <script src="https://static.opentok.com/v2/js/opentok.min.js" type="text/javascript" defer></script>
+    <title>OpenTok Screen Sharing Solution Annotation</title>
+    <style type="text/css" media="screen">
+        body {
+            margin: 0;
+            background-color: rgba(0, 153, 203, 0.7);
+            box-sizing: border-box;
+            height: 100vh;
+        }
+
+        canvas {
+            top: 0;
+            z-index: 1000;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .ots-hidden {
+            display: none !important;
+        }
+
+        .main-wrap {
+            width: 100%;
+            height: 100%;
+            -ms-box-orient: horizontal;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -moz-flex;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .inner-wrap {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .publisherContainer {
+            display: block;
+            background-color: #000000;
+            position: absolute;
+        }
+
+        .publisher-wrap {
+            height: 100%;
+            width: 100%;
+        }
+
+        .subscriberContainer {
+            position: absolute;
+            display: flex;
+            top: 20px;
+            left: 20px;
+            width: 200px;
+            height: 120px;
+            background-color: #000000;
+            border: 2px solid white;
+            border-radius: 6px;
+        }
+
+        .subscriberContainer .OT_video-poster {
+            width: 100%;
+            height: 100%;
+            opacity: .25;
+            background-repeat: no-repeat;
+            background-image: url(https://static.opentok.com/webrtc/v2.8.2/images/rtc/audioonly-silhouette.svg);
+            background-size: 50%;
+            background-position: center;
+        }
+
+        .OT_video-element {
+            height: 100%;
+            width: 100%;
+        }
+
+        .OT_edge-bar-item {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrap">
+        <div id="annotationContainer" class="inner-wrap"></div>
+    </div>
+    <div id="toolbarContainer" class="ots-annotation-toolbar-container">
+        <div id="toolbar" class="toolbar-wrap"></div>
+    </div>
+    <div id="subscriberVideo" class="subscriberContainer hidden"></div>
+
+    <script type="text/javascript" charset="utf-8">
+        /** Must use double-quotes since everything must be converted to a string */
+        var opener;
+        var canvas;
+
+        if (!toolbar) {
+            alert("Something went wrong: You must pass an OpenTok annotation toolbar object into the window.")
+        } else {
+            opener = window.opener;
+            window.onbeforeunload = window.triggerCloseEvent;
+        }
+
+        var localScreenProperties = {
+            insertMode: "append",
+            width: "100%",
+            height: "100%",
+            videoSource: "window",
+            showControls: false,
+            style: {
+                buttonDisplayMode: "off"
+            },
+            subscribeToVideo: "true",
+            subscribeToAudio: "false",
+            fitMode: "contain"
+        };
+
+        var createContainerElements = function() {
+
+            var parentDiv = document.getElementById("annotationContainer");
+            var publisherContainer = document.createElement("div");
+            publisherContainer.setAttribute("id", "screenshare_publisher");
+            publisherContainer.classList.add("publisher-wrap");
+            parentDiv.appendChild(publisherContainer);
+
+            return {
+                annotation: parentDiv,
+                publisher: publisherContainer
+            };
+
+        };
+
+        var addSubscriberVideo = function(stream) {
+            var container = document.getElementById("subscriberVideo");
+            var subscriber = session.subscribe(stream, container, localScreenProperties, function(error) {
+                if (error) {
+                    console.log("Failed to add subscriber video", error);
+                }
+                container.classList.remove("hidden");
+            });
+        };
+
+
+        if (navigator.userAgent.indexOf("Firefox") !== -1) {
+            var ghost = window.open("about:blank");
+            ghost.focus();
+            ghost.close();
+        }
+    </script>
+</body>
+
+</html>

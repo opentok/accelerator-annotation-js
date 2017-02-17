@@ -1,0 +1,235 @@
+/*Annotation Styles*/
+
+.ots-annotation-toolbar-container {
+    position: fixed;
+    top: 125px;
+    right: 0;
+    width: 60px;
+    z-index: 1000;
+    background-color: #666666;
+}
+
+.ots-annotation-toolbar-container .OT_panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ots-annotation-toolbar-container .annotation-btn {
+    height: 60px;
+    width: 60px;
+    background-position: center center;
+    background-repeat: no-repeat !important;
+    background-color: #666666;
+    cursor: pointer;
+    border: none;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.pen {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-pencil.png);
+    background-size: 27px 30px;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.colors {
+    width: 23px;
+    height: 24px;
+    border: 3px solid white;
+    margin: 18px 18.5px;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.line {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-line.png);
+    background-size: 26px 31px;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.line-width {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-line_width.png);
+    background-size: 26px 31px;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.shapes {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-shapes.png);
+    background-size: 26px 31px;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.text {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-text.png);
+    background-size: 21px 25px;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.capture {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-camera.png);
+    background-size: 34px 31px;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.clear {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-clear.png);
+    background-size: 31px 31px;
+}
+
+.ots-annotation-toolbar-container .annotation-btn.undo {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-undo.png);
+    background-size: 34px 31px;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel,
+.ots-annotation-toolbar-container .color-picker {
+    position: absolute;
+    right: 65px;
+    width: 40px;
+    background-color: #333333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.5s ease-out;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.pen {
+    top: 0px;
+    /*transition: visibility 0s linear 0.5s;*/
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.pen .line-width-option {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.pen:after {
+    position: absolute;
+    top: 15px;
+    right: -15px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #333333;
+}
+
+.ots-annotation-toolbar-container .color-picker {
+    top: 0;
+}
+
+.ots-annotation-toolbar-container .color-picker:after {
+    position: absolute;
+    top: 75px;
+    right: -15px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #333333;
+}
+
+.ots-annotation-toolbar-container .color-picker .color-choice {
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+.ots-annotation-toolbar-container .color-picker .color-choice.active {
+    border: 2px solid white;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes {
+    display: flex;
+    flex-direction: column;
+    top: 75px;
+    min-height: 159.89px;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes:after {
+    position: absolute;
+    top: 62.5px;
+    right: -15px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #333333;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes input {
+    width: 22px;
+    height: 22px;
+    margin: 9px;
+    border: none;
+    background-color: #333333;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes .annotation-btn.rectangle {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-rectangle.png);
+    background-size: 18px 18px;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes .annotation-btn.rectangle-fill {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-rectangle-fill.png);
+    background-size: 18px 18px;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes .annotation-btn.oval {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-oval.png);
+    background-size: 20px 20px;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes .annotation-btn.oval-fill {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-oval-fill.png);
+    background-size: 20px 20px;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes .annotation-btn.star {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-star.png);
+    background-size: 22px 22px;
+}
+
+.ots-annotation-toolbar-container .OT_subpanel.shapes .annotation-btn.arrow {
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-arrow.png);
+    background-size: 6.5px 23.5px;
+}
+
+.ots-annotation-prompt {
+    background-color: rgba(1, 1, 1, 0.5);
+    width: 200px;
+    border-radius: 5px;
+}
+
+.ots-annotation-prompt span {
+    display: block;
+    float: left;
+    width: 100px;
+    height: 40px;
+    font-size: 12px;
+    padding: 10px;
+    color: white;
+    line-height: 20px;
+}
+
+.ots-annotation-prompt .dismiss-btn {
+    display: block;
+    width: 40px;
+    height: 36px;
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-trash.png);
+    float: left;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 65%;
+}
+
+.ots-annotation-prompt .confirm-btn {
+    display: block;
+    width: 40px;
+    height: 36px;
+    background-image: url(https://assets.tokbox.com/solutions/images/annotation-confirm.png);
+    float: right;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 70%;
+}
