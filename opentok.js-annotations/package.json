@@ -1,6 +1,6 @@
 {
   "name": "opentok-annotation",
-  "version": "2.0.45",
+  "version": "2.0.50",
   "description": "OpenTok annotation accelerator pack",
   "main": "dist/opentok-annotation.js",
   "directories": {
@@ -21,7 +21,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/opentok/accelerator-annotation-js"
+    "url": "https://github.com/opentok/annotation-acc-pack/tree/1.0.0/js"
   },
   "devDependencies": {
     "chai": "^3.3.0",
