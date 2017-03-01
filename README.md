@@ -40,6 +40,7 @@ Click [here](https://www.npmjs.com/search?q=opentok-acc-pack) for a list of all 
 ## Explore the code
 
 The following `options` fields are used in the `AnnotationAccPack` constructor:<br/>
+
 | Feature        | Field  | Required |
 | ------------- | ------------- | -----|
 | Set the OpenTok session  (object).| `session` |`true`|
@@ -123,4 +124,4 @@ otCore.on('eventName', callback)
 The `linkCanvas` method refers to a parent DOM element called the `absoluteParent`.  When resizing the canvas, the annotation accelerator pack also resizes the canvas container element using inline properties.  Because of this, we need another element to reference for dimensions.  For this, we use the `absoluteParent`.
 
 
-### One to one sample app using the Screensharing and Accelerator Annotation with best-practices for Javascript (https://github.com/opentok/one-to-one-screen-annotations-sample-apps).
+### One to one sample app using the Screensharing and Accelerator Annotation with best-practices for Javascript [here](https://github.com/opentok/one-to-one-screen-annotations-sample-apps/tree/develop).
