@@ -17,7 +17,7 @@
 
   // vars for the analytics logs. Internal use
   var _logEventData = {
-    clientVersion: 'js-vsol-2.0.45-beta',
+    clientVersion: 'js-vsol-2.0.50',
     componentId: 'annotationsAccPack',
     name: 'guidAnnotationsKit',
     actionStartDrawing: 'StartDrawing',

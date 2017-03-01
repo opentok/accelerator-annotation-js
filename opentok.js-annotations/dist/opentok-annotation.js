@@ -2160,6 +2160,11 @@
 
   /** End Analytics */
 
+  // Check for DOM element or string.  Return element.
+  var _getElem = function (el) {
+    return typeof el === 'string' ? document.querySelector(el) : el;
+  };
+
   // Trigger event via common layer API
   var _triggerEvent = function (event, data) {
     if (_accPack) {
@@ -2215,19 +2220,24 @@
   var _resizeCanvas = function () {
     var width;
     var height;
-    var cobrowsing = !!_elements.imageId;
+    var cobrowsing = !!_elements.cobrowsingImage;
     if (cobrowsing) {
       // Cobrowsing images are currently fixed size, so resize isn't needed
       return;
     }
 
-    if (_elements.imageId === null) {
+    if (_elements.cobrowsingImage === null) {
       var el = _elements.absoluteParent || _elements.canvasContainer;
       width = el.clientWidth;
       height = el.clientHeight;
     }
 
-    var videoDimensions = _canvas.videoFeed.stream.videoDimensions;
+    try {
+      var videoDimensions = _canvas.videoFeed.stream.videoDimensions;
+    } catch (e) {
+      console.log('OT Annotation: Annotation video stream no longer exists');
+      return;
+    }
 
     // Override dimensions when subscribing to a mobile screen
     if (_subscribingToMobileScreen) {
@@ -2389,6 +2399,10 @@
 
   // Determine whether or not the subscriber stream is from a mobile device
   var _requestPlatformData = function (pubSub) {
+    if (!pubSub.stream) {
+      // Are we cobrowsing?
+      return;
+    }
     _session.signal({
       type: 'otAnnotation_requestPlatform',
       to: pubSub.stream.connection,
@@ -2440,8 +2454,8 @@
    * @ param {object} container - The parent container for the canvas element
    * @ param {object} options
    * @param {object} options.canvasContainer - The id of the parent for the annotation canvas
-   * @param {object} [options.externalWindow] - Reference to the annotation window if publishing
-   * @param {array} [options.absoluteParent] - Reference element for resize if other than container
+   * @param {object | string} [options.externalWindow] - Reference to the annotation window (or query selector) if publishing
+   * @param {array | string} [options.absoluteParent] - Reference to element (or query selector) for resize if other than container
    */
   var linkCanvas = function (pubSub, container, options) {
     /**
@@ -2451,16 +2465,16 @@
      * exist, we are watching the canvas belonging to the party viewing the
      * shared screen
      */
-    _elements.resizeSubject = _.property('externalWindow')(options) || window;
-    _elements.externalWindow = _.property('externalWindow')(options) || null;
-    _elements.absoluteParent = _.property('absoluteParent')(options) || null;
-    _elements.imageId = _.property('imageId')(options) || null;
-    _elements.canvasContainer = container;
+    _elements.resizeSubject = _getElem(_.property('externalWindow')(options) || window);
+    _elements.externalWindow = _getElem(_.property('externalWindow')(options) || null);
+    _elements.absoluteParent = _getElem(_.property('absoluteParent')(options) || null);
+    _elements.cobrowsingImage = _getElem(_.property('cobrowsingImage')(options) || null);
+    _elements.canvasContainer = _getElem(container);
 
     // The canvas object
     _canvas = new OTSolution.Annotations({
       feed: pubSub,
-      container: container,
+      container: _elements.canvasContainer,
       externalWindow: _elements.externalWindow
     });
 
