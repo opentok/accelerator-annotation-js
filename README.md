@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/opentok/accelerator-annotation-js.svg?branch=master)](https://travis-ci.org/opentok/accelerator-annotation-js)
 [![GitHub release](https://img.shields.io/github/release/opentok/accelerator-annotation-js.svg)](./README.md)
-[![license MIT](https://img.shields.io/github/license/opentok/accelerator-annotation-js.svg)](./.github/LICENSE)
+[![license MIT](https://img.shields.io/github/license/opentok/accelerator-annotation-js.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/opentok-annotation.svg)](https://www.npmjs.com/package/opentok-annotation)
 ______
 
