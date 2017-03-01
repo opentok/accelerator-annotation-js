@@ -1,14 +1,12 @@
 ![logo](tokbox-logo.png)
 
+# Accelerator Annotation for JavaScript<br/>
+
 [![Build Status](https://travis-ci.org/opentok/accelerator-annotation-js.svg?branch=master)](https://travis-ci.org/opentok/accelerator-annotation-js)
 [![GitHub release](https://img.shields.io/github/release/opentok/accelerator-annotation-js.svg)](./README.md)
 [![license MIT](https://img.shields.io/github/license/opentok/accelerator-annotation-js.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/opentok-annotation.svg)](https://www.npmjs.com/package/opentok-annotation)
-______
 
-______
-
-# Accelerator Annotation for JavaScript<br/>
 
 ## Quick start
 
@@ -20,14 +18,11 @@ This section shows you how to prepare and use the OpenTok Annotations Accelerato
 ```bash
 $ npm install --save opentok-annotation
 ```
-
-
 If using browserify or webpack:
 ```javascript
 const annotation = require('opentok-annotation');
 ```
 Otherwise, include the accelerator pack in your html:
-
 ```html
 <script src="../your/path/to/opentok-annotation.js"></script>
 ```
@@ -56,7 +51,7 @@ Once initialized, the following methods are available:
 
 ### `start`
 
-*Creates an external window (if required) and links the annotation toolbar to the session.  An external window is ONLY required if sharing the current browser window. *
+*Creates an external window (if required) and links the annotation toolbar to the session.  An external window is ONLY required if sharing the current browser window.*
 
 ```javascript
 @param {Object} session
