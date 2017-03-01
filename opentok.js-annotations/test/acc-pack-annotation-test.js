@@ -31,9 +31,9 @@ describe('Annotation Acc Pack', function() {
    before(function() {
 
        _optionsap = {
-           apiKey: '', // Replace with an OpenTok API key
-           sessionId: '', // Replace with a generated Session ID
-           token: ''
+           apiKey: '123', // Replace with an OpenTok API key
+           sessionId: '1234', // Replace with a generated Session ID
+           token: '12345'
       };
 
        _accPack = new AcceleratorPack(_optionsap);
@@ -43,10 +43,10 @@ describe('Annotation Acc Pack', function() {
        };
 
        _session = {
-         id: '', // Replace with a generated Session ID
+         id: '123', // Replace with a generated Session ID
          connection: _connection,
-         apiKey: '', // Replace with an OpenTok API key
-         token: ''
+         apiKey: '1234', // Replace with an OpenTok API key
+         token: '12345'
       };
 
        _options = {
