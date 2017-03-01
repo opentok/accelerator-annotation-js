@@ -31,9 +31,9 @@ describe('Annotation Acc Pack', function() {
    before(function() {
 
        _optionsap = {
-           apiKey: '', // Replace with an OpenTok API key
-           sessionId: '', // Replace with a generated Session ID
-           token: ''
+           apiKey: 'yourAPIKey', // Replace with an OpenTok API key
+           sessionId: 'yourSessionID', // Replace with a generated Session ID
+           token: 'yourToken'
       };
 
        _accPack = new AcceleratorPack(_optionsap);
@@ -43,10 +43,10 @@ describe('Annotation Acc Pack', function() {
        };
 
        _session = {
-         id: '', // Replace with a generated Session ID
+         id: 'yourSessionID', // Replace with a generated Session ID
          connection: _connection,
-         apiKey: '', // Replace with an OpenTok API key
-         token: ''
+         apiKey: 'yourAPIKey', // Replace with an OpenTok API key
+         token: 'yourToken'
       };
 
        _options = {
@@ -83,7 +83,6 @@ describe('Annotation Acc Pack', function() {
               var options = {
                  extensionID: "ExtensionIDTest"
               };
-              //expect(_screenSharingConstructor.bind(_screenSharingConstructor, options)).to.throw('Screen Share Acc Pack requires an OpenTok session');
               expect(_annotationConstructor.bind(_annotationConstructor, options)).to.throw('OpenTok Annotation Accelerator Pack requires an OpenTok session');
               expect(_annotation).to.be.null;
         });
@@ -169,24 +168,52 @@ describe('Annotation Acc Pack', function() {
       it('Should end annotation', function() {
            _annotation = new AnnotationAccPack(_options);
            _annotation.start(_session, _options);
-           _annotation.end();
-           _annotation.end();
-
+           //_annotation.end();
+      });
+      it('Should throw exception when end a not started annotation', function() {
+           _annotation = new AnnotationAccPack(_options);
+           expect(_annotation.end.bind(_annotation.end)).to.throw('');
       });
     });
 
     describe('Test linkCanvas Annotation', function() {
-      it('Should start annotation', function() {
+      it('Should link canvas', function() {
            _annotation = new AnnotationAccPack(_options);
-           _annotation.linkCanvas("","", _options);
+           var pubSub ={
+             stream: ""
+           };
+           _annotation.start(_session, null);
+           //_annotation.linkCanvas(pubSub, "toolbar", _options);
       });
-      it('Should not throw an exception when apiKey and/or token is/are missing', function() {
-            _annotation = new AnnotationAccPack(_options);
-            _annotation.linkCanvas("","", _options);
+      it('Should throw an exception when apiKey and/or token is/are missing or options is null', function() {
+            var options = {
+              apiKey: '',
+              sessionId: '',
+              token: ''
+            };
+            var annotation = new AnnotationAccPack(_options);
+            var pubSub ={
+              stream: ""
+            };
+            annotation.start(_session, _options);
+            expect(annotation.linkCanvas.bind(annotation.linkCanvas, pubSub, "toolbar", options)).to.throw('');
+            expect(annotation.linkCanvas.bind(annotation.linkCanvas, pubSub, "toolbar", null)).to.throw('');
       });
-      it('Should not throw an exception when apiKey and/or token is/are missing', function() {
+      it('Should throw an exception when link canvas and annotations is not started', function() {
              _annotation = new AnnotationAccPack(_options);
-             _annotation.start(_session, null);
+             var pubSub ={
+               stream: ""
+             };
+             expect(_annotation.linkCanvas.bind(_annotation.linkCanvas, pubSub, "toolbar", _options)).to.throw('');
+      });
+      it('Should throw an exception when link canvas and conatiners and/or pubSub is not valid', function() {
+             _annotation = new AnnotationAccPack(_options);
+             var pubSub ={
+               stream: ""
+             };
+             _annotation.start(_session, _options);
+             expect(_annotation.linkCanvas.bind(_annotation.linkCanvas, null, "toolbar", _options)).to.throw('');
+             expect(_annotation.linkCanvas.bind(_annotation.linkCanvas, pubSub, null, _options)).to.throw('');
       });
     });
 
