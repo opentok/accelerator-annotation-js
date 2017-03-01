@@ -34,7 +34,7 @@ module.exports = function(grunt) {
           },
           prod: {
               singleRun: true,
-              browsers: ['Chrome']
+              browsers: ['sl_chrome']
           }
       }
     });
