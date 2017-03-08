@@ -17,7 +17,7 @@
 
   // vars for the analytics logs. Internal use
   var _logEventData = {
-    clientVersion: 'js-vsol-2.0.50',
+    clientVersion: 'js-vsol-1.1.0',
     componentId: 'annotationsAccPack',
     name: 'guidAnnotationsKit',
     actionStartDrawing: 'StartDrawing',
@@ -103,10 +103,16 @@
 
       var scale = {
         get X() {
+          if (cobrowsing && subscribingToMobileScreen) {
+            return update.canvasWidth / canvas.width;
+          }
           var width = cobrowsing ? canvas.width : self.videoFeed.stream.videoDimensions.width;
           return width / canvas.width;
         },
         get Y() {
+          if (cobrowsing && subscribingToMobileScreen) {
+            return update.canvasHeight / canvas.height;
+          }
           var height = cobrowsing ? canvas.height : self.videoFeed.stream.videoDimensions.height;
           return height / canvas.height;
         }
@@ -374,7 +380,7 @@
     };
 
     this.onMobileScreenShare = function (mobile) {
-      _subscribingToMobileScreen = mobile;
+      subscribingToMobileScreen = mobile;
     };
 
     this.onResize = function () {
@@ -2063,7 +2069,7 @@
       try {
         panel.parentNode.removeChild(panel);
       } catch (e) {
-        console.log(e);
+        console.log('Toolbar parent no longer exists');
       }
 
       canvases.forEach(function (annotationView) {

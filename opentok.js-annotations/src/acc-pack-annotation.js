@@ -30,7 +30,7 @@
 
   // vars for the analytics logs. Internal use
   var _logEventData = {
-    clientVersion: 'js-vsol-2.0.50',
+    clientVersion: 'js-vsol-1.1.0',
     componentId: 'annotationsAccPack',
     name: 'guidAnnotationsKit',
     actionInitialize: 'Init',
@@ -317,22 +317,25 @@
   };
 
   // Determine whether or not the subscriber stream is from a mobile device
-  var _requestPlatformData = function (pubSub) {
-    if (!pubSub.stream) {
-      // Are we cobrowsing?
-      return;
-    }
-    _session.signal({
-      type: 'otAnnotation_requestPlatform',
-      to: pubSub.stream.connection,
-    });
+  var _requestPlatformData = function (pubSub, mobileInitiator) {
+    if (!!pubSub.stream) {
+      _session.signal({
+        type: 'otAnnotation_requestPlatform',
+        to: pubSub.stream.connection,
+      });
 
-    _session.on('signal:otAnnotation_mobileScreenShare', function (event) {
-      var platform = event.data ? JSON.parse(event.data).platform : null;
-      var isMobile = (platform == 'ios' || platform === 'android')
-      _subscribingToMobileScreen = isMobile;
-      _canvas.onMobileScreenShare(isMobile);
-    });
+      _session.on('signal:otAnnotation_mobileScreenShare', function (event) {
+        var platform = event.data ? JSON.parse(event.data).platform : null;
+        var isMobile = (platform == 'ios' || platform === 'android');
+        _subscribingToMobileScreen = isMobile;
+        _canvas.onMobileScreenShare(isMobile);
+      });
+    }
+
+    if (mobileInitiator) {
+      _subscribingToMobileScreen = true;
+      _canvas.onMobileScreenShare(true);
+    }
   };
 
   /**
@@ -375,6 +378,7 @@
    * @param {object} options.canvasContainer - The id of the parent for the annotation canvas
    * @param {object | string} [options.externalWindow] - Reference to the annotation window (or query selector) if publishing
    * @param {array | string} [options.absoluteParent] - Reference to element (or query selector) for resize if other than container
+   * * @param {Boolean} [options.mobileInitiator] - Is cobrowsing being initiated by a mobile device
    */
   var linkCanvas = function (pubSub, container, options) {
     /**
@@ -406,8 +410,7 @@
       };
 
     _canvas.onScreenCapture(onScreenCapture);
-    _requestPlatformData(pubSub);
-
+    _requestPlatformData(pubSub, options && options.mobileInitiator);
 
     var context = _elements.externalWindow ? _elements.externalWindow : window;
     // The canvas DOM element
