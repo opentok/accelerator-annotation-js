@@ -320,7 +320,7 @@
   var _requestPlatformData = function (pubSub, mobileInitiator) {
     if (!!pubSub.stream) {
 
-      var isPublisher = = Object.prototype.hasOwnProperty.call(pubSub, 'accessAllowed');
+      var isPublisher = Object.prototype.hasOwnProperty.call(pubSub, 'accessAllowed');
 
       _session.signal({
         type: 'otAnnotation_requestPlatform',

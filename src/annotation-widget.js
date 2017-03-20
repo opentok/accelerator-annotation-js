@@ -380,6 +380,11 @@
       cbs.push(cb);
     };
 
+    /**
+     * Set flags for sharing with mobile devices
+     * @param {Boolean} mobile - Is the other party using a mobile device
+     * @param {Boolean} publishing - Are we publishing our screen?
+     */
     this.onMobileScreenShare = function (mobile, publishing) {
       if (publishing) {
         publishingScreenToMobileDevice = mobile;
