@@ -103,14 +103,14 @@
 
       var scale = {
         get X() {
-          if (cobrowsing && subscribingToMobileScreen) {
+          if (publishingScreenToMobileDevice || (cobrowsing && subscribingToMobileScreen)) {
             return update.canvasWidth / canvas.width;
           }
           var width = cobrowsing ? canvas.width : self.videoFeed.stream.videoDimensions.width;
           return width / canvas.width;
         },
         get Y() {
-          if (cobrowsing && subscribingToMobileScreen) {
+          if (publishingScreenToMobileDevice || (cobrowsing && subscribingToMobileScreen)) {
             return update.canvasHeight / canvas.height;
           }
           var height = cobrowsing ? canvas.height : self.videoFeed.stream.videoDimensions.height;
@@ -154,6 +154,7 @@
     var isVideo = self.videoFeed && self.videoFeed.element ? true : false;
     var cobrowsing = !self.videoFeed.stream;
     var subscribingToMobileScreen = false;
+    var publishingScreenToMobileDevice = false;
     var client = new VideoRelativeCoordinateSet({
       dragging: false
     });
@@ -379,8 +380,12 @@
       cbs.push(cb);
     };
 
-    this.onMobileScreenShare = function (mobile) {
-      subscribingToMobileScreen = mobile;
+    this.onMobileScreenShare = function (mobile, publishing) {
+      if (publishing) {
+        publishingScreenToMobileDevice = mobile;
+      } else {
+        subscribingToMobileScreen = mobile;
+      }
     };
 
     this.onResize = function () {
