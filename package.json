@@ -1,6 +1,6 @@
 {
   "name": "opentok-annotation",
-  "version": "2.0.52",
+  "version": "2.0.53",
   "description": "OpenTok annotation accelerator pack",
   "main": "dist/opentok-annotation.js",
   "directories": {
@@ -25,6 +25,11 @@
   },
   "devDependencies": {
     "chai": "^3.3.0",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.10.2",
     "gulp": "^3.9.0",
     "gulp-amd-optimizer": "^0.3.4",
     "gulp-amdclean": "^1.1.1",

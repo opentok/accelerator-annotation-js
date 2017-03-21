@@ -103,14 +103,14 @@
 
       var scale = {
         get X() {
-          if (cobrowsing && subscribingToMobileScreen) {
+          if (publishingScreenToMobileDevice || (cobrowsing && subscribingToMobileScreen)) {
             return update.canvasWidth / canvas.width;
           }
           var width = cobrowsing ? canvas.width : self.videoFeed.stream.videoDimensions.width;
           return width / canvas.width;
         },
         get Y() {
-          if (cobrowsing && subscribingToMobileScreen) {
+          if (publishingScreenToMobileDevice || (cobrowsing && subscribingToMobileScreen)) {
             return update.canvasHeight / canvas.height;
           }
           var height = cobrowsing ? canvas.height : self.videoFeed.stream.videoDimensions.height;
@@ -154,6 +154,7 @@
     var isVideo = self.videoFeed && self.videoFeed.element ? true : false;
     var cobrowsing = !self.videoFeed.stream;
     var subscribingToMobileScreen = false;
+    var publishingScreenToMobileDevice = false;
     var client = new VideoRelativeCoordinateSet({
       dragging: false
     });
@@ -379,8 +380,17 @@
       cbs.push(cb);
     };
 
-    this.onMobileScreenShare = function (mobile) {
-      subscribingToMobileScreen = mobile;
+    /**
+     * Set flags for sharing with mobile devices
+     * @param {Boolean} mobile - Is the other party using a mobile device
+     * @param {Boolean} publishing - Are we publishing our screen?
+     */
+    this.onMobileScreenShare = function (mobile, publishing) {
+      if (publishing) {
+        publishingScreenToMobileDevice = mobile;
+      } else {
+        subscribingToMobileScreen = mobile;
+      }
     };
 
     this.onResize = function () {
@@ -2406,6 +2416,9 @@
   // Determine whether or not the subscriber stream is from a mobile device
   var _requestPlatformData = function (pubSub, mobileInitiator) {
     if (!!pubSub.stream) {
+
+      var isPublisher = Object.prototype.hasOwnProperty.call(pubSub, 'accessAllowed');
+
       _session.signal({
         type: 'otAnnotation_requestPlatform',
         to: pubSub.stream.connection,
@@ -2415,7 +2428,7 @@
         var platform = event.data ? JSON.parse(event.data).platform : null;
         var isMobile = (platform == 'ios' || platform === 'android');
         _subscribingToMobileScreen = isMobile;
-        _canvas.onMobileScreenShare(isMobile);
+        _canvas.onMobileScreenShare(isMobile, isPublisher);
       });
     }
 
