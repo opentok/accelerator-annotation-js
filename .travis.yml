@@ -6,9 +6,23 @@ env:
 before_install:
 before_script:
 - npm install
-- npm install --save-dev chai karma karma-chai karma-chrome-launcher karma-coverage karma-firefox-launcher karma-html2js-preprocessor mocha karma-mocha karma-phantomjs-launcher karma-browserify babel-plugin-espower babelify karma-sauce-launcher
+- npm install --save-dev chai karma karma-chai karma-chrome-launcher karma-coverage
+  karma-firefox-launcher karma-html2js-preprocessor mocha karma-mocha karma-phantomjs-launcher
+  karma-browserify babel-plugin-espower babelify karma-sauce-launcher
 script:
 - npm test
+deploy:
+  provider: npm
+  email: opentok-vsolutions@tokbox.com
+  api_key:
+    secure: DvCaFcXLcG1ervQ1G53HycOGywkqCkUFwlZse9WtBeATc//R1VNCFlxQslj6lYaNkasdb74MYC7MpOUiS76aLh+XmfsRRAF08rXh8oxjiHyGPS1pI2eydAywmgkcs1O1eD6Z3GG+7gGEtzP9bZVAQWBPrnfxwu2CseFr0ddzxeLU3bQ0+EqkRyP8tk8WSjLix6i3YiUiJBMiryR7C87CnEAi+qSazCrXIfHNGkDTjcgVJn39FsjEx2gUQBvewp9blXVaiCM7lPMK+6hCjguTDwfs7zaKDaQNdrXJyR6+5XwpZp41Q7LOjElnH7hVgexFH48HeH9puH7ljhKaPz1R54SoLStvzQBjnl3Pi39YSzqEQxfLJ2XpZtnWxurg2HcWMYS+aHds1w8RXAIeNH3cidA4Ktl7fdcCbA94MWCm1QZwnm/QoeYPk/NuStMD15VE2BKBv2AFDll1THZs0Rm4B0VWHvBuS/2l9Aekp1mA5uBQW0vuooaHUEXfJ2KYxYEdgQaNwyGE5Dvd0suUjsUtlENB7DD41i/WoSn7MskAbIaR9QeLHR0zGnp6m2CCSr63xvlVDLuEfBvwQGUxSGuDaARySl1yLEiwuKqRvISLdhWyUKAVvXdnQFMRbwbPB/ekE0N0GkYwOr0BkIQo/Ovh3toKW8F0p/CxoPUQeaNSdgE=
+  on:
+    branch: OTS-1166
+after_deploy:
+- VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
+- git tag v$VERSION;
+- git commit -m "New build. Bump npm version.";
+- git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js v$VERSION;
 notifications:
   slack:
     secure: gnKw/BvuTAKFIxVwn0CtaEli4Md7NZPb3Pz0OqadzPv69jXKe1UehR1aunif6uae71Or1LqV19ez1/6JnjLjLpjQ0Zr4qmN+hY4mDNkuIToValGmsaRBqaB10JVzbgDvH2gZfucMdazpoPhNxbixRZw89hnm2psyJbm9nx2Ys9BGzu/F0D1+wIkVhsuLWf5NHUURSgSUvUvKuJtgX7HetbADbs5tqABGoKkBVhoWEyVKEn3TCKTczIaw2xFMXbt3KTFohlUM2wg2KqmbEHAZ1cbb6dWJM6chaLeBuBIv+HAjgWEz6kL8ongo8kvz2ip/x/xcrLfJXFC2tJjTHCVpYLmKhTWoVlAVBDKrEQEfDZTpbxUUO+BEAE7Fr+6RkNYdgdOqtVXLHaFRcbRUSUV+x7TJCKboZ06suKUFjzjZsHxST2xHDk8NNLcGr8e54SJl+44bgPRXTSStlNqf5ZQxS/bThgnb79nWgRc5eBxkbRThWRgnJwzSpAoDY2qWRcb+wtN/ct8mEvKNMCS+V4LZNdZbbk+77enZEeYBFgb7JcBrXZ3/xdUbNsKDRN66n2q8/O+cLKEjLQORd+43w1WoAMa/EL8kqOKQvu22Is6E0gyH0HiTHlY2rfm4hfyofD4yH8s1KbNk+tqQPQuHVaNTBl+8fOStHKUO0zJeHD4Kj9M=
