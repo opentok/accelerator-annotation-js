@@ -11,6 +11,8 @@ before_script:
   karma-browserify babel-plugin-espower babelify karma-sauce-launcher
 script:
 - npm test
+- VER_DEPL=$(npm show opentok-annotation version)
+- VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
 deploy:
   provider: npm
   email: opentok-vsolutions@tokbox.com
@@ -18,8 +20,8 @@ deploy:
     secure: DvCaFcXLcG1ervQ1G53HycOGywkqCkUFwlZse9WtBeATc//R1VNCFlxQslj6lYaNkasdb74MYC7MpOUiS76aLh+XmfsRRAF08rXh8oxjiHyGPS1pI2eydAywmgkcs1O1eD6Z3GG+7gGEtzP9bZVAQWBPrnfxwu2CseFr0ddzxeLU3bQ0+EqkRyP8tk8WSjLix6i3YiUiJBMiryR7C87CnEAi+qSazCrXIfHNGkDTjcgVJn39FsjEx2gUQBvewp9blXVaiCM7lPMK+6hCjguTDwfs7zaKDaQNdrXJyR6+5XwpZp41Q7LOjElnH7hVgexFH48HeH9puH7ljhKaPz1R54SoLStvzQBjnl3Pi39YSzqEQxfLJ2XpZtnWxurg2HcWMYS+aHds1w8RXAIeNH3cidA4Ktl7fdcCbA94MWCm1QZwnm/QoeYPk/NuStMD15VE2BKBv2AFDll1THZs0Rm4B0VWHvBuS/2l9Aekp1mA5uBQW0vuooaHUEXfJ2KYxYEdgQaNwyGE5Dvd0suUjsUtlENB7DD41i/WoSn7MskAbIaR9QeLHR0zGnp6m2CCSr63xvlVDLuEfBvwQGUxSGuDaARySl1yLEiwuKqRvISLdhWyUKAVvXdnQFMRbwbPB/ekE0N0GkYwOr0BkIQo/Ovh3toKW8F0p/CxoPUQeaNSdgE=
   on:
     branch: OTS-1166
+    condition: "$VERSION != $VER_DEPL"
 after_deploy:
-- VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
 - git tag v$VERSION;
 - git commit -m "New build. Bump npm version.";
 - git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js v$VERSION;
