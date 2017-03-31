@@ -56,8 +56,7 @@ module.exports = function(config) {
           testName: 'Accelerator Annotation Unit Tests',
           tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
           username: process.env.SAUCE_USERNAME,
-          accessKey: process.env.SAUCE_ACCESS_KEY,
-          startConnect: false
+          accessKey: process.env.SAUCE_ACCESS_KEY
         }
     };
 
