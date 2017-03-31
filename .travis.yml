@@ -3,7 +3,7 @@ node_js:
 - '4.4'
 env:
 - SAUCE_USERNAME=verticalsol
-before_install: 
+before_install:
 before_script:
 - npm install
 - npm install --save-dev chai karma karma-chai karma-chrome-launcher karma-coverage
@@ -12,7 +12,7 @@ before_script:
 script:
 - npm test
 - VER_DEPL=$(npm show opentok-annotation version)
-- VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
+- VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//')
 deploy:
   provider: npm
   email: opentok-vsolutions@tokbox.com
