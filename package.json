@@ -7,10 +7,11 @@
     "test": "test"
   },
   "scripts": {
-    "build-css": "npm-css css/annotation.css -o dist/annotation.css",
-    "build-js": "concat -o dist/opentok-annotation.js src/* && uglifyjs dist/opentok-annotation.js -o dist/opentok-annotation.min.js",
-    "build-images": "cp -r images/ dist/images/",
-    "build": "mkdir -p dist && npm run build-js & npm run build-css & npm run build-images",
+    "build:css": "npm-css css/annotation.css -o dist/annotation.css",
+    "build:js": "concat -o dist/opentok-annotation.js src/* && uglifyjs dist/opentok-annotation.js -o dist/opentok-annotation.min.js",
+    "build:images": "cp -r images/ dist/images/",
+    "build:logversion": "replace '(js-vsol-)(x.y.z)' '$1'$npm_package_version dist/*",
+    "build": "mkdir -p dist && npm run build:js & npm run build:css & npm run build:images && npm run build:logversion",
     "test": "karma start"
   },
   "keywords": [
@@ -53,6 +54,7 @@
     "merge-stream": "^1.0.0",
     "mocha": "^3.2.0",
     "npm-css": "^0.2.3",
+    "replace": "^0.3.0",
     "rimraf": "^2.4.3",
     "sinon": "^1.17.0",
     "uglify-js": "^2.8.15",
