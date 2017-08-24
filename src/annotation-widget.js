@@ -17,7 +17,7 @@
 
   // vars for the analytics logs. Internal use
   var _logEventData = {
-    clientVersion: 'js-vsol-1.1.0',
+    clientVersion: 'js-vsol-x.y.z', // x.y.z filled by npm build script
     componentId: 'annotationsAccPack',
     name: 'guidAnnotationsKit',
     actionStartDrawing: 'StartDrawing',
@@ -103,14 +103,14 @@
 
       var scale = {
         get X() {
-          if (cobrowsing && subscribingToMobileScreen) {
+          if (publishingScreenToMobileDevice || (cobrowsing && subscribingToMobileScreen)) {
             return update.canvasWidth / canvas.width;
           }
           var width = cobrowsing ? canvas.width : self.videoFeed.stream.videoDimensions.width;
           return width / canvas.width;
         },
         get Y() {
-          if (cobrowsing && subscribingToMobileScreen) {
+          if (publishingScreenToMobileDevice || (cobrowsing && subscribingToMobileScreen)) {
             return update.canvasHeight / canvas.height;
           }
           var height = cobrowsing ? canvas.height : self.videoFeed.stream.videoDimensions.height;
@@ -154,6 +154,7 @@
     var isVideo = self.videoFeed && self.videoFeed.element ? true : false;
     var cobrowsing = !self.videoFeed.stream;
     var subscribingToMobileScreen = false;
+    var publishingScreenToMobileDevice = false;
     var client = new VideoRelativeCoordinateSet({
       dragging: false
     });
@@ -379,8 +380,17 @@
       cbs.push(cb);
     };
 
-    this.onMobileScreenShare = function (mobile) {
-      subscribingToMobileScreen = mobile;
+    /**
+     * Set flags for sharing with mobile devices
+     * @param {Boolean} mobile - Is the other party using a mobile device
+     * @param {Boolean} publishing - Are we publishing our screen?
+     */
+    this.onMobileScreenShare = function (mobile, publishing) {
+      if (publishing) {
+        publishingScreenToMobileDevice = mobile;
+      } else {
+        subscribingToMobileScreen = mobile;
+      }
     };
 
     this.onResize = function () {

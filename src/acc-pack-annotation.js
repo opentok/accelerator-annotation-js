@@ -30,7 +30,7 @@
 
   // vars for the analytics logs. Internal use
   var _logEventData = {
-    clientVersion: 'js-vsol-1.1.0',
+    clientVersion: 'js-vsol-x.y.z', // x.y.z filled by npm build script
     componentId: 'annotationsAccPack',
     name: 'guidAnnotationsKit',
     actionInitialize: 'Init',
@@ -319,6 +319,9 @@
   // Determine whether or not the subscriber stream is from a mobile device
   var _requestPlatformData = function (pubSub, mobileInitiator) {
     if (!!pubSub.stream) {
+
+      var isPublisher = Object.prototype.hasOwnProperty.call(pubSub, 'accessAllowed');
+
       _session.signal({
         type: 'otAnnotation_requestPlatform',
         to: pubSub.stream.connection,
@@ -328,7 +331,7 @@
         var platform = event.data ? JSON.parse(event.data).platform : null;
         var isMobile = (platform == 'ios' || platform === 'android');
         _subscribingToMobileScreen = isMobile;
-        _canvas.onMobileScreenShare(isMobile);
+        _canvas.onMobileScreenShare(isMobile, isPublisher);
       });
     }
 
