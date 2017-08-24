@@ -1286,10 +1286,11 @@
        * required to convert the entire array of updates as opposed to each one
        * individually.  However, OT is throwing a 413 error once the size exceeds
        * 7,900 characters. So, 7 is the magic number for the time being.
+       * UPDATE: At 7, we're still seeing errors.  So, 6 it is.
        */
       var dataChunk;
       var start = 0;
-      var updatesPerSignal = 7;
+      var updatesPerSignal = 6;
       while (start < data.length) {
         dataChunk = data.slice(start, start + updatesPerSignal);
         updateType(dataChunk);
