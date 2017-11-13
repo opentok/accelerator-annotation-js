@@ -1,8 +1,10 @@
 module.exports = function(config) {
   var customLaunchers = {
     sl_chrome: {
-      base: 'Chrome',
-      flags: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream']
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'OS X 10.11',
+      version: '56'
     }
   };
 
