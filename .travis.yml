@@ -4,10 +4,10 @@ node_js:
 env:
 - SAUCE_USERNAME=opentok
 script:
-  - npm run build
-  - npm test
-  - VER_DEPL=$(npm show opentok-annotation version)
-  - VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//')
+  - npm run build;
+  - npm test;
+  - VER_DEPL=$(npm show opentok-annotation version);
+  - VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
 deploy:
   provider: npm
   email: vsolutions@tokbox.com
