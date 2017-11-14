@@ -17,7 +17,6 @@ deploy:
     branch: master
     condition: $VERSION != $VER_DEPL
 after_deploy:
- - VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
  - git commit -m "New build. Bump npm version." --allow-empty;
  - git tag v$VERSION;
  - git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js v$VERSION;
