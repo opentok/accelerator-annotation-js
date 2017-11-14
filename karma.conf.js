@@ -1,16 +1,8 @@
 module.exports = function(config) {
-  var customLaunchers = {
-    sl_chrome: {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      platform: 'OS X 10.11',
-      version: '56'
-    }
-  };
 
   var configuration = {
         plugins: [
-           'karma-mocha', 'karma-coverage', 'karma-html2js-preprocessor', 'karma-sauce-launcher', 'karma-chrome-launcher', 'karma-chai'
+           'karma-mocha', 'karma-coverage', 'karma-html2js-preprocessor', 'karma-chrome-launcher', 'karma-chai'
         ],
         basePath: '',
         frameworks: ['mocha', 'chai'],
@@ -34,11 +26,11 @@ module.exports = function(config) {
             'test/*.html': ['html2js'],
             'src/*.js': ['coverage']
         },
-        reporters: ['progress', 'coverage', 'dots', 'saucelabs'],
+        reporters: ['progress', 'coverage', 'dots'],
         port: 9877,
         colors: true,
         autoWatch: true,
-        browsers: [],
+        browsers: ['chrome', 'firefox'],
         singleRun: true,
         logLevel: config.LOG_INFO,
         coverageReporter: {
@@ -52,16 +44,17 @@ module.exports = function(config) {
                 { type: 'lcovonly', subdir: '.', file: 'report-lcovonly.txt' }
             ]
         },
-        sauceLabs: {
-          testName: 'Accelerator Annotation Unit Tests',
-          tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
-          startConnect: false
-        }
+        customLaunchers: {
+         Chrome_travis_ci: {
+           base: 'Chrome',
+           flags: ['--no-sandbox']
+         }
+       }
     };
 
     if (process.env.TRAVIS) {
        configuration.customLaunchers = customLaunchers;
-       configuration.browsers = Object.keys(customLaunchers);
+       configuration.browsers = ['Chrome_travis_ci'];
     }
     config.set(configuration);
   };
