@@ -10,6 +10,9 @@ before_install:
 script:
   - npm run build;
   - npm test;
+  - if [[ "$TRAVIS_PULL_REQUEST" = "false" ]]; then
+      bash <(curl -s https://codecov.io/bash);
+    fi
   - VER_DEPL=$(npm show opentok-annotation version);
   - VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
 deploy:
@@ -21,9 +24,9 @@ deploy:
     branch: master
     condition: $VERSION != $VER_DEPL
 after_deploy:
- - git commit -m "New build. Bump npm version." --allow-empty;
- - git tag v$VERSION;
- - git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js v$VERSION;
+  - git commit -m "New build. Bump npm version." --allow-empty;
+  - git tag v$VERSION;
+  - git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js v$VERSION;
 notifications:
   slack:
     secure: gnKw/BvuTAKFIxVwn0CtaEli4Md7NZPb3Pz0OqadzPv69jXKe1UehR1aunif6uae71Or1LqV19ez1/6JnjLjLpjQ0Zr4qmN+hY4mDNkuIToValGmsaRBqaB10JVzbgDvH2gZfucMdazpoPhNxbixRZw89hnm2psyJbm9nx2Ys9BGzu/F0D1+wIkVhsuLWf5NHUURSgSUvUvKuJtgX7HetbADbs5tqABGoKkBVhoWEyVKEn3TCKTczIaw2xFMXbt3KTFohlUM2wg2KqmbEHAZ1cbb6dWJM6chaLeBuBIv+HAjgWEz6kL8ongo8kvz2ip/x/xcrLfJXFC2tJjTHCVpYLmKhTWoVlAVBDKrEQEfDZTpbxUUO+BEAE7Fr+6RkNYdgdOqtVXLHaFRcbRUSUV+x7TJCKboZ06suKUFjzjZsHxST2xHDk8NNLcGr8e54SJl+44bgPRXTSStlNqf5ZQxS/bThgnb79nWgRc5eBxkbRThWRgnJwzSpAoDY2qWRcb+wtN/ct8mEvKNMCS+V4LZNdZbbk+77enZEeYBFgb7JcBrXZ3/xdUbNsKDRN66n2q8/O+cLKEjLQORd+43w1WoAMa/EL8kqOKQvu22Is6E0gyH0HiTHlY2rfm4hfyofD4yH8s1KbNk+tqQPQuHVaNTBl+8fOStHKUO0zJeHD4Kj9M=
