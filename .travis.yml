@@ -2,16 +2,34 @@ language: node_js
 node_js:
 - '4.4'
 env:
-- SAUCE_USERNAME=verticalsol
+- SAUCE_USERNAME=opentok
 before_install:
-before_script:
-- npm install
-- npm install --save-dev chai karma karma-chai karma-chrome-launcher karma-coverage karma-firefox-launcher karma-html2js-preprocessor mocha karma-mocha karma-phantomjs-launcher karma-browserify babel-plugin-espower babelify karma-sauce-launcher
+- export CHROME_BIN=chromium-browser
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 script:
-- npm test
+  - npm run build;
+  - npm test;
+  - if [[ "$TRAVIS_PULL_REQUEST" = "false" ]]; then
+      bash <(curl -s https://codecov.io/bash);
+    fi
+  - VER_DEPL=$(npm show opentok-annotation version);
+  - VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
+deploy:
+  provider: npm
+  email: vsolutions@tokbox.com
+  api_key:
+    secure: EOCr0/2+5iZPYH8Oz0WcCxopkBSfsRmUVqkILL2JeogsUWiFjURTPD5x23RhTSBcR9rY1KFUhrUpaI2GwgBwBSR/Fo0pZ56A7uNv01DqP0j0aElywkSTB+Mf4Cw5wYr4KVDIzDIle1Qe4r4aX52FGcGsDXZb1yzxektSvETtrQOPAjzI3fqhMv9z10bs7lR+c2tW0mF3eOnequy42EbLWLIJQNI/vYHuMfHHxvcMwUeXMLGwjYfHeSenlgcttfzEnrdOrRMDMWoflNn/4wRMF52zTPAa29ScXa5jh4Lcv/w2PuuwEDNTwKdO5LfLFUelhAV7RV/adLIcQMQWILNVz2ycilbOujDKq9haZ/CIsD8CQTMQ31ASGIWjPCAX2YtC2AI2tbBSB3QC8iWzfZCYnk9NrPU7W++zJBpkt4B1RLSKJoEhTTzMxMomyGb5h/KN1+ukESyB11dtcbKSdD64qxyBHiYBtIQkFQZwFn/jS+1IL32I6sr0Ieo2bpiUAskQRPhzagbLJjd0cw55CKDkC7y9SnaX0qgRahws5aK/OBCianSnlYgRyVuJXK57HNZiYe3x/509DGJMNyXm+UnoAhfM9v5BnA9mJqoVvzf9m9L0jOaWoItJOUldiQSOchWWbGInja3f7k9SGzcOXW9xKkgLLZmuph1IVDLUgywVWR8=
+  on:
+    branch: master
+    condition: $VERSION != $VER_DEPL
+after_deploy:
+  - git commit -m "New build. Bump npm version." --allow-empty;
+  - git tag v$VERSION;
+  - git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js v$VERSION;
 notifications:
   slack:
     secure: gnKw/BvuTAKFIxVwn0CtaEli4Md7NZPb3Pz0OqadzPv69jXKe1UehR1aunif6uae71Or1LqV19ez1/6JnjLjLpjQ0Zr4qmN+hY4mDNkuIToValGmsaRBqaB10JVzbgDvH2gZfucMdazpoPhNxbixRZw89hnm2psyJbm9nx2Ys9BGzu/F0D1+wIkVhsuLWf5NHUURSgSUvUvKuJtgX7HetbADbs5tqABGoKkBVhoWEyVKEn3TCKTczIaw2xFMXbt3KTFohlUM2wg2KqmbEHAZ1cbb6dWJM6chaLeBuBIv+HAjgWEz6kL8ongo8kvz2ip/x/xcrLfJXFC2tJjTHCVpYLmKhTWoVlAVBDKrEQEfDZTpbxUUO+BEAE7Fr+6RkNYdgdOqtVXLHaFRcbRUSUV+x7TJCKboZ06suKUFjzjZsHxST2xHDk8NNLcGr8e54SJl+44bgPRXTSStlNqf5ZQxS/bThgnb79nWgRc5eBxkbRThWRgnJwzSpAoDY2qWRcb+wtN/ct8mEvKNMCS+V4LZNdZbbk+77enZEeYBFgb7JcBrXZ3/xdUbNsKDRN66n2q8/O+cLKEjLQORd+43w1WoAMa/EL8kqOKQvu22Is6E0gyH0HiTHlY2rfm4hfyofD4yH8s1KbNk+tqQPQuHVaNTBl+8fOStHKUO0zJeHD4Kj9M=
 addons:
   jwt:
-    secure: lFhgKV2AgDpXv6rGY/VmShtXZ6WUVrctFA79okIjr8wF4uayaMlPWLDEVIXn8Db/ST/3CoKxzyuHJiwUKgC/9w3Up+VUO+SZ1NmbZwu+ryu9MW2SflrPqEq5/w1bWxU2krYphR5mDhaAVRKxDbJsOntuRI/v1D590vrzqUBqWDIrUMhGPJDKjL+N8TMhwQp2OTuuQbX0G869uLff9qSNNRnhI7b/lF8kjwxbEWXTx2JzX3g4KvQF5FBgy0+mvYIPhEew6pbvT8r8daT8VSqeozNPHpKUYuxLBExlMhxT48E/KtuJML0nyvp20glNql27oy7u3XlIPbKnEzeu0Hr8GtFcjlDUNvu6m3fFxMJTgY6tXX48n933uH4XwIaaRQuZMavuIsdoNhzAb60jlZBnLf+Lr25YSF6n6Z1qb7A8nh8M7laF1YoN5EP3iK9qc3Nh1hvsGTwBYlPzeoiIfEUEwpuJAyXE/hO9GpnIlfzDe2XbwBdB9PuKQyvyKq96OSBwh3P3gai/4OEN0nV+7xUxrv7W1ESvBd3CRQtqTxEYr/T+r7BpMvFvlgtvrEBzS4Q2cO+BJQkKp8yZpcBqm2y3xWNc0tzUDEQ2i5yttfCxyL+ldku6YSzRDYKt7XHqq+0jBSGAlI03MVXwhmS66vCXYk2GdV8db51+OuvMYslOMu8=
+    secure: Z+gEkV+OzmCpa7Ea74G8A2xZeymKsx2cRBOQE79yfGG7YJg/yG+EhhSg4XbPKGksy85P7Rb+cBbs48RfRwRyb64g5nCsOPfUwWB6Jp5d2WCXCl2FXWSfIu9lozRyOjSNbtqQiErE+fMN311eNN06bjhcDyH4DsBk5C5EigTYCN2zNusBuelc10N81Lt2bqzA7KZehw3ItJuBhnnSLSVIMDUdBxyrtJ7yHrkkXWJdmFnaalCnaNq+OovMZdFYMfoXzDFq2UUcnL4khjosVDhMQlpajuB2oLbCK8VBd8buh3/faEd5WOQRv1lJvVDnkMFnHgBXrDhHjJQeh8H1ht/ikR8e3bzJXpJMCXANXsWcxBDnA6J58B21fpiCcrJxzogzqg6IDfxkScOS1zPe4U79aCwoawfrnOgrA9ivmRVM3rvYSDJB2L3gAQKnIO2VUKb0W+le454Gi8YOfEslXrgWYVi3hiJLsWMKN6JyjRJLURTa6xQ9lvcsQeq9dVZeZF3G+wGLcOwdUupvV7tWI8pdn3j3B6b95972xoppT9Czy3hfGSS6bfhYTZQqixiTjBEUUsGYSYJ/op8NPIfxvbyGy5tpe7tK7Q/Oz12GbXAGe+1r7j6MKlWlIIFE6XMKMA3oNFP6AEwmiW7cD0uA5OcKjnF1vb4Lv1yXjX4axOhFTTw=
