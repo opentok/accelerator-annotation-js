@@ -8,22 +8,23 @@ before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script:
-  - npm run build;
-  - npm test && bash <(curl -s https://codecov.io/bash);
-  - VER_DEPL=$(npm show opentok-annotation version);
-  - VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
+- npm run build;
+- npm test && bash <(curl -s https://codecov.io/bash);
+- VER_DEPL=$(npm show opentok-annotation version);
+- VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
 deploy:
   provider: npm
   email: vsolutions@tokbox.com
   api_key:
-    secure: QSMO5ftNIJXD3bHHAbEgT0ac7j/2cafd9qDtWfmbzeWM4Xqa+QwguT1jDyypxdygL6gKKVd67AnxQN/2mLFA4xxpFMuaU7azmM9elWTf5RQJRR+NVn15n/RHOHJ0W3yd6eR/gP6nAcYJDEv3w98ZiVKvsQADclmSKLCl39OQHrrPqUKEIdCRMLn3/ndJo408q/q7kRul+/cnJ3yGhbcW7jYdW6yNb+jmwg9fjhNXCqnGnIcmMUyaQ3FrcVwOV/1Kmkh2PTOjgwf4KimnuW+y7kIaUWRO1pbJ4E2n/XMHmKIhi/bp5dDfwLMrIG0el2LPBhVqiS0PtK2pOhQUiMixJGct0m7Tl4xnzYqN73yl8AIgxD0TE4ou/KkTPtAgiJ95e6RE9oZ2+ImJg/wcb5bfQZPTiDmJA3/B/ntCpS3CPASraDmUotAoWFm0JsKR3h6oPtfMVSfoHLWr0pJkpYQXjbAGOGZT9d/5SvxzTdexv4Hhj167VeSfQqexxlSd6MS3bq5fbJlmfTsDoLmNmxMhB7VN3bB8wLFkck/68Ajwn7+wjqfxtqBchdqTA1h2BR+DeN/aiOPLX6+pdeqNt2k2RmQYDG+/a8INBYb5n8SJvvwV5XHIPbSgFsOJjXXANtQVx7s3AmoQ2ky7QYebXHz7RQCwz7+JIRxPXHGXnnrN2EE=
+    secure: NWjHYlIb20Pdl4+pbDiV6JNq+0vEVdNt3F5GkfGGwPggzIm8OBxL2NMstwklO9SezCkLf22lLjSFDFHDgWbSI+vIB0bPVn1Z5//F9lqx6114B+frEqDkPkURv+Q5/prnE04ztGtptNT48DX0X4t4OfeVMboOaq1Is+W/d0jezv08lJXdkT3AEX8SxhJs8/iX6Oq09Qxg3wuG6anSGQeCJ4yZ17frDzze5mlB2W0EYkkvvn5TiaU+oSCSOmcWv9f36UhFH75faZ5Bd2EHRxorlkS+mo7D0fZF9kY8cwqX6LXPZ5KX3hNMLLVmZDluQUYZtKz8hX+4P10EfEnKzdoRXiDJKXoJHyfnMQKLsv3WNwzhjoboPIwU64j5Yw2s/t5+Ah1Qwc5YHuNoyRsg/gYwznOnI+FZn9NTBvvplB7Tbq36lAeaxEmauE1/JJD5JmLPetrlhVr8auXYS7AXRQiRlgfky9Q32bZVa+S5uy8JcNScq7M1VehH7B+Lh2ZBQgcH+9/NsSjtTOo7o/JwL9cHk3QFxb36QG/V3e1OJwvkqQYsE7lq1yD3rSANBxtVqJlYnesSzCpSkyi9D5UbdI10G/7I6bakzN5bCdkyiecXkj6+t8+uEiIVU2JO3tdttNdQhm0X+Ku/pq7X8w+XLJYtKwGY657Q97vcgGFuUbNz0wo=
   on:
     branch: master
     condition: $VERSION != $VER_DEPL
 after_deploy:
-  - git commit -m "New build. Bump npm version." --allow-empty;
-  - git tag v$VERSION;
-  - git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js v$VERSION;
+- git commit -m "New build. Bump npm version." --allow-empty;
+- git tag v$VERSION;
+- git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js
+  v$VERSION;
 notifications:
   slack:
     secure: gnKw/BvuTAKFIxVwn0CtaEli4Md7NZPb3Pz0OqadzPv69jXKe1UehR1aunif6uae71Or1LqV19ez1/6JnjLjLpjQ0Zr4qmN+hY4mDNkuIToValGmsaRBqaB10JVzbgDvH2gZfucMdazpoPhNxbixRZw89hnm2psyJbm9nx2Ys9BGzu/F0D1+wIkVhsuLWf5NHUURSgSUvUvKuJtgX7HetbADbs5tqABGoKkBVhoWEyVKEn3TCKTczIaw2xFMXbt3KTFohlUM2wg2KqmbEHAZ1cbb6dWJM6chaLeBuBIv+HAjgWEz6kL8ongo8kvz2ip/x/xcrLfJXFC2tJjTHCVpYLmKhTWoVlAVBDKrEQEfDZTpbxUUO+BEAE7Fr+6RkNYdgdOqtVXLHaFRcbRUSUV+x7TJCKboZ06suKUFjzjZsHxST2xHDk8NNLcGr8e54SJl+44bgPRXTSStlNqf5ZQxS/bThgnb79nWgRc5eBxkbRThWRgnJwzSpAoDY2qWRcb+wtN/ct8mEvKNMCS+V4LZNdZbbk+77enZEeYBFgb7JcBrXZ3/xdUbNsKDRN66n2q8/O+cLKEjLQORd+43w1WoAMa/EL8kqOKQvu22Is6E0gyH0HiTHlY2rfm4hfyofD4yH8s1KbNk+tqQPQuHVaNTBl+8fOStHKUO0zJeHD4Kj9M=
