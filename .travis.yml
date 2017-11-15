@@ -9,17 +9,14 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 script:
   - npm run build;
-  - npm test;
-  - if [[ "$TRAVIS_PULL_REQUEST" = "false" ]]; then
-      bash <(curl -s https://codecov.io/bash);
-    fi
+  - npm test && bash <(curl -s https://codecov.io/bash);
   - VER_DEPL=$(npm show opentok-annotation version);
   - VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
 deploy:
   provider: npm
   email: vsolutions@tokbox.com
   api_key:
-    secure: JgU2EYey5OIHA/9g62g7ebm/6zD3jy1ZbQyG3G04kkg3B6bZCo+2PaAwGQ9mcN4yoywSXnqsVfADpHfUqfFErnYAiJf4B/+H2bVTGTKH5PUYQpE6g4v2Vl80tzoyhE/Jsi/sXcsI3RUCDomtyvMGVQ2FZB7KXPpwwgXN693bsuobg/3BZ0yAVuk9EDXtd8XvIBubGXVb5vXPdPt9gwKFrH28IDWyFuaFwa4JesWXfG8+4xFDyVqSEtKlG2TeAKiO3lvV2qeIFsHfp8s80caeUinADaJsl38KTvQbBPyfjpplN1Sypp+NIlfYFD3YXuK9Rs+/QgJrkDJDztxR6mjj77LIrC91+cX71mfX9VleneUFni2+fJLJnc7GfusmTIT3SFJ5PB6vglBAmCtY83Mu8650vZWv0x7tyR4CXXDFl+2WBT2ZixGE5eM83BJiOqPycSYUImpfxsS0cppYuU8Dwm8p1rU6uwfVtjTHTXr3EUt/14G6GwE0pyW6Na3IRPrflRe0zQgNrSp64JDdpX2vKtU6tVRdXTETONnigmtVpCVQJ3bZp9RQSg4mWlzDJfn3yyQBMPFWsaz27a+PBNOEqwx+pFm7Yzl++jngPYv4bdAsewfbPNXF2q2iumhBNI22KK40JVp6/aXt9LUS9lQ5A+yistntS7p6EHxK8w499Uk=
+    secure: GdHtBkkbPjhCN/8vk1yicQ4CsNK39nfi6oA74weuJCeApQ0FmmnHOY86pNPBygGSArW/v0J9G4zTjWyN4bZm4Jy4RZr3HqbEB/amC/0z84589E6cOEpJ/kEQF01avH4ep1qCjRMZGRaUfNRFkhcYzFfiZeVksgsfdXfLlB2+0DL+O0+1efSnV+6vT1RxVgVsWHxB2dhQY32XDSKx1BYuBoO3JJtYJuOlOvYwpx5EwZRiw1qOf6AFAJcBkeYS39atpQTkfJQwdCljMTWI19UEFvrVTqw/u3FSedbpHO8f/Tens4uiGB5DkjNgXN5lSOrrTEkGjz4XeQWIWflt3fs3MCGEnwiw8sDVXsUYGZlqzd8nbua6JH4dNvK+UbLSGQapBiIZkYfhSWvjzM5yUDxFKzpxJ6QiOH3ITgzfgqj9weXlEXSDK9Vdn+WU52npOeyNJejxEFHhioD8zCjhCaXOuV6ojlrLD+IBDcJiR5X/yCLS7HtvOKMGwqpocvDxM9iVSf68ryJ8x9ETejBdvjBYoz5Qa4bmfP7vc1xkjiwS9ZN22vrreaYZ5skfDSDYgp/FBpVSYX09ogQCtFJBSoybOQ2Au8pg7Yz6n7Je7BZp7QWDX61THdSwvjlHW9m/nRgBKjRu93bx7PNaKfkrQgiJlx4Sx+BquipJBP3YOqJS1zw=
   on:
     branch: master
     condition: $VERSION != $VER_DEPL
