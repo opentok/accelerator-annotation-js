@@ -7,6 +7,7 @@ before_install:
 - export CHROME_BIN=chromium-browser
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
+- echo \"//registry.npmjs.org/:_authToken=\\${NPM_TOKEN}\" > .npmrc
 script:
 - npm run build;
 - npm test && bash <(curl -s https://codecov.io/bash);
@@ -20,8 +21,7 @@ script:
 deploy:
   provider: npm
   email: vsolutions@tokbox.com
-  api_key:
-    secure: G265RoXVU02ru/nmUqDih7eSZVSNBAcggPsd18z7pVOPYXcYpDru2d2WHf1PxG37KEShQKrXNNw+Bg7vJP4JzGRDd9dsaxHmDVU8oOkHWB2ioeDzmAdK0sDuqhLC5A9z8KRf4fDVpQMAVIZ2yzIkv2KUPTZD9La+wDKgEsxxVFo6fpSoZOr967JLt2pRlgbCoV0wtuG4pr00uZvXvVoBXLYjYFxcLmeEH6Tv09aqpmL8EBTwmW8sApIUJZiw0PqvYrIN3q9Jl+EigegTfyoqfnwlm79fk1pTxM4bC21Quw5TAxwHZAFDYgiEN248FJhD1b/cSliWEcqZlKMC511ia64VE+72mg+PGU/7ZDT6Kbc99FpOzA+j17fr0BvgqjmMigu6eBZ3UiOK0wI1Vv7t/+8XaCKgDU3JJa7L8LZkizByGtJBNOgEO/5m6VnJcp8lwnihaF/5f3QL2y44irj0Oer5J+m97V4EJ6lJlWNpg1xDIkPjizCrECWE3O8JRgiFCQhN/tUxsD7XGAjDmw1EuroLpIHV66a+i94l3sRPWgUtvrMp+/I/6zMy/HV8cWCWW87qDLOUxJum1jZs9TdmyoS5i7OfxZfDLOy/MAhOcbUJqt6OXWR5AhrRGkrC/bqWktgEwGblkNYgNQ6U2WIo/WuP5nDx+0eK82jLFQnmGro=
+  api_key: $NPM_TOKEN
   on:
     branch: master
     condition: $VERSION != $VER_DEPL
