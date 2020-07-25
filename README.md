@@ -1,14 +1,13 @@
-![OpenTok Labs](https://d26dzxoao6i3hh.cloudfront.net/items/0U1R0a0e2g1E361H0x3c/Image%202017-11-22%20at%2012.16.38%20PM.png?v=2507a2df)
-
-##### Disclaimer: Please keep in mind that this is an OpenTok Labs project which means that it's not officially supported by TokBox.
-
-# Accelerator Annotation for JavaScript<br/>
+# Accelerator Annotation for JavaScript
 
 [![Build Status](https://travis-ci.org/opentok/accelerator-annotation-js.svg?branch=master)](https://travis-ci.org/opentok/accelerator-annotation-js)
 [![GitHub release](https://img.shields.io/github/release/opentok/accelerator-annotation-js.svg)](./README.md)
 [![license MIT](https://img.shields.io/github/license/opentok/accelerator-annotation-js.svg)](./LICENSE)
 [![npm](https://img.shields.io/npm/v/opentok-annotation.svg)](https://www.npmjs.com/package/opentok-annotation)
 
+<img src="https://assets.tokbox.com/img/vonage/Vonage_VideoAPI_black.svg" height="48px" alt="Tokbox is now known as Vonage" />
+
+> Disclaimer: Please keep in mind that this is an OpenTok Labs project which means that it's not officially supported by Vonage.
 
 ## Quick start
 
@@ -20,35 +19,42 @@ This section shows you how to prepare and use the OpenTok Annotations Accelerato
 ```bash
 $ npm install --save opentok-annotation
 ```
+
 If using browserify or webpack:
+
 ```javascript
 const annotation = require('opentok-annotation');
 ```
+
+
 Otherwise, include the accelerator pack in your html:
+
 ```html
 <script src="../your/path/to/opentok-annotation.js"></script>
 ```
- . . . and it will be available in global scope as `AnnotationAccPack`
- 
------------------
+
+... and it will be available in global scope as `AnnotationAccPack`
+
+---
 
 Click [here](https://www.npmjs.com/search?q=opentok-acc-pack) for a list of all OpenTok accelerator packs.
 
 ## Explore the code
 
-The following `options` fields are used in the `AnnotationAccPack` constructor:<br/>
+The following `options` fields are used in the `AnnotationAccPack` constructor:
 
-| Feature        | Field  | Required |
-| ------------- | ------------- | -----|
-| Set the OpenTok session  (object).| `session` |`true`|
-| Set the Common layer API (object) - Automatically set if using [Core](https://github.com/opentok/accelerator-core-js). | `accPack` |`false`|
-| Set the callback to receive the image data on screen capture (function). | `onScreenCapture` |`false`|
+| Feature                                                                                                                | Field             | Required |
+| ---------------------------------------------------------------------------------------------------------------------- | ----------------- | -------- |
+| Set the OpenTok session  (object).                                                                                     | `session`         | `true`   |
+| Set the Common layer API (object) - Automatically set if using [Core](https://github.com/opentok/accelerator-core-js). | `accPack`         | `false`  |
+| Set the callback to receive the image data on screen capture (function).                                               | `onScreenCapture` | `false`  |
 
 To initialize the accelerator pack:
 
 ```javascript
 var annotation = new annotationAccPack(options);
 ```
+
 Once initialized, the following methods are available:
 
 ### `start`
@@ -91,17 +97,16 @@ Once initialized, the following methods are available:
 ### `end`
 
 *End annotation, clean up the toolbar and canvas(es)*
-***
 
 The `AnnotationAccPack`  triggers the following events via the common layer:
 
-| Event        | Description  |
-| ------------- | ------------- |
-| `startAnnotation` | Annotation linked to session and toolbar created.|
-| `linkAnnotation ` | Annotation canvas has been linked to the toolbar. |
-| `resizeCanvas` | The annotation canvas has been resized. |
-| `annotationWindowClosed` (screen sharing only)  | The external annotation window has been closed.|
-| `endAnnotation` | Annotation has ended.  Toolbar and canvases have been cleaned up. |
+| Event                                          | Description                                                       |
+| ---------------------------------------------- | ----------------------------------------------------------------- |
+| `startAnnotation`                              | Annotation linked to session and toolbar created.                 |
+| `linkAnnotation `                              | Annotation canvas has been linked to the toolbar.                 |
+| `resizeCanvas`                                 | The annotation canvas has been resized.                           |
+| `annotationWindowClosed` (screen sharing only) | The external annotation window has been closed.                   |
+| `endAnnotation`                                | Annotation has ended.  Toolbar and canvases have been cleaned up. |
 
 If using the common layer, you can subscribe to these events by calling `registerEventListener` on  `_accPack` and providing a callback function:
 
@@ -116,9 +121,26 @@ otCore.on('eventName', callback)
 ```
 
 ### Best Practices for Resizing the Canvas
+
 <a name="resizing-canvas"></a>
 
 The `linkCanvas` method refers to a parent DOM element called the `absoluteParent`.  When resizing the canvas, the annotation accelerator pack also resizes the canvas container element using inline properties.  Because of this, we need another element to reference for dimensions.  For this, we use the `absoluteParent`.
 
+### Multiparty video communication sample app using the Screen-sharing and Accelerator Annotation with best-practices for Javascript [here](https://github.com/opentok/accelerator-sample-apps-js)
 
-### Multiparty video communication sample app using the Screensharing and Accelerator Annotation with best-practices for Javascript [here](https://github.com/opentok/accelerator-sample-apps-js).
+## Development and Contributing
+
+Interested in contributing? We :heart: pull requests! See the [Contribution](CONTRIBUTING.md) guidelines.
+
+## Getting Help
+
+We love to hear from you so if you have questions, comments or find a bug in the project, let us know! You can either:
+
+- Open an issue on this repository
+- See <https://support.tokbox.com/> for support options
+- Tweet at us! We're [@VonageDev](https://twitter.com/VonageDev) on Twitter
+- Or [join the Vonage Developer Community Slack](https://developer.nexmo.com/community/slack)
+
+## Further Reading
+
+- Check out the Developer Documentation at <https://tokbox.com/developer/>
