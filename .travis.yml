@@ -1,19 +1,18 @@
 language: node_js
 node_js:
-- '4.4'
-env:
-- SAUCE_USERNAME=opentok
-before_install:
-- export CHROME_BIN=chromium-browser
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- echo \"//registry.npmjs.org/:_authToken=\\${NPM_TOKEN}\" > .npmrc
+- '10.16'
+services:
+- xvfb
+branches:
+  only: 
+    - master
+before_script:
+  - npm install
 script:
 - npm run build;
-- npm test && bash <(curl -s https://codecov.io/bash);
-- VER_DEPL=$(npm show opentok-annotation version);
-- VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
-- if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" && "$VER_DEPL" != "$VERSION" ]]; then
+- npm test
+- if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then 
+    VERSION=$(jq '.version' package.json | sed -e 's/^"//' -e 's/"$//');
     git commit -m "New build. Bump npm version." --allow-empty;
     git tag v$VERSION;
     git push --quiet https://$GITHUBKEY@github.com/opentok/accelerator-annotation-js v$VERSION;
@@ -24,7 +23,6 @@ deploy:
   api_key: $NPM_TOKEN
   on:
     branch: master
-    condition: $VERSION != $VER_DEPL
   skip_cleanup: true
 notifications:
   slack:
